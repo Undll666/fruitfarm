@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>衢州·云上橘园 - 缤纷版</title>
+    <title>衢州·云上橘园 - 丰收版</title>
     <style>
         :root {
-            --primary-green: #2e7d32;
-            --light-green: #a5d6a7;
+            --primary-green: #388e3c;
+            --light-green: #c8e6c9;
             --fruit-orange: #ff6f00;
-            --bg-color: #f4f9f4;
+            --bg-color: #f1f8e9;
             --text-dark: #333;
         }
 
@@ -20,6 +20,7 @@
             background-color: var(--bg-color);
             color: var(--text-dark);
             -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
         }
 
         .app-container {
@@ -30,128 +31,39 @@
             box-shadow: 0 0 30px rgba(0,0,0,0.1);
             position: relative;
             padding-bottom: 30px;
-            overflow-x: hidden;
         }
 
-        /* === 1. 首页美化升级 (重点修改部分) === */
-        
-        /* 顶部 Banner */
+        /* === 首页 Banner === */
         .home-banner {
-            position: relative;
-            height: 320px; /* 加高一点，视觉冲击力更强 */
-            
-            /* 双重保险：图片没加载出来时，显示渐变色，绝不显示灰色 */
-            background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%); 
-            
-            /* 叠加高清大图 */
-            background-image: url('https://images.unsplash.com/photo-1543158143-698f24b2b23f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
-            background-size: cover;
-            background-position: center;
-            
-            border-radius: 0 0 40px 40px; /* 更圆润的底部 */
-            display: flex;
-            align-items: flex-end;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(46, 125, 50, 0.2);
+            position: relative; height: 280px;
+            background: url('https://images.unsplash.com/photo-1543158143-698f24b2b23f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80') center/cover;
+            border-radius: 0 0 30px 30px;
+            display: flex; align-items: flex-end;
         }
+        .banner-mask { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7)); border-radius: 0 0 30px 30px;}
+        .banner-text { position: relative; z-index: 2; padding: 25px; color: white; width: 100%; }
+        .banner-text h1 { margin: 0; font-size: 28px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 
-        /* 渐变遮罩，为了让白字看清楚，但不再是全灰，而是底部渐变 */
-        .banner-gradient {
-            position: absolute; 
-            inset: 0;
-            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.8) 100%);
-        }
-
-        .banner-text {
-            position: relative; 
-            z-index: 2; 
-            padding: 30px 25px; 
-            color: white; 
-            width: 100%;
-        }
-        
-        .banner-tag {
-            background: #ff6f00;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .banner-text h1 { margin: 0; font-size: 32px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-        .banner-text p { margin: 8px 0 0; font-size: 15px; opacity: 0.95; font-weight: 500; }
-
-        /* 实时数据条 */
-        .live-status-bar {
-            display: flex; justify-content: space-around;
-            background: white; margin: -25px 20px 20px; padding: 15px;
-            border-radius: 20px; position: relative; z-index: 5;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            text-align: center;
-        }
-        .status-item span { display: block; font-weight: 800; font-size: 18px; color: var(--primary-green); }
-        .status-item label { font-size: 11px; color: #999; margin-top: 4px; display:block; }
-
-        /* 滚动播报 */
-        .marquee-wrapper {
-            background: #fff3e0; color: #ef6c00; padding: 12px 15px;
-            font-size: 12px; display: flex; align-items: center; margin-bottom: 25px;
-            border-left: 4px solid #ff9800;
-        }
-        .marquee-content { white-space: nowrap; overflow: hidden; margin-left: 10px; width: 100%; }
-        .marquee-text { display: inline-block; animation: scrollLeft 15s linear infinite; }
-        @keyframes scrollLeft { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
-        /* 核心卖点网格 */
-        .feature-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px 20px;
-        }
-        .feature-card {
-            background: #f9fbe7; padding: 15px; border-radius: 15px; display: flex; align-items: center;
-            border: 1px solid #f0f4c3; transition: transform 0.2s;
-        }
-        .feature-card:active { transform: scale(0.98); background: #e8f5e9; }
-        .feature-icon { font-size: 28px; margin-right: 12px; }
-        .feature-text h4 { margin: 0; font-size: 14px; color: #333; }
-        .feature-text p { margin: 2px 0 0; font-size: 11px; color: #777; }
-
-        /* === 2. 认养与内页通用样式 === */
-        
-        .view-switcher {
-            display: flex; background: #f5f5f5; border-radius: 25px; margin: 15px 20px; padding: 4px;
-        }
-        .switch-btn {
-            flex: 1; text-align: center; padding: 10px; border-radius: 20px; cursor: pointer; font-size: 13px; color: #666;
-            transition: all 0.3s;
-        }
+        /* === 养成主控区 === */
+        .view-switcher { display: flex; background: #f5f5f5; border-radius: 25px; margin: 15px 20px; padding: 4px; }
+        .switch-btn { flex: 1; text-align: center; padding: 10px; border-radius: 20px; cursor: pointer; font-size: 13px; color: #666; transition: all 0.3s; }
         .switch-btn.active { background: white; color: var(--primary-green); font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
         .display-area {
             height: 300px; margin: 0 20px 20px; border-radius: 20px; overflow: hidden; position: relative;
             background: linear-gradient(to bottom, #81d4fa, #e1f5fe 60%, #a5d6a7 60%, #81c784);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
         }
-        
-        /* 动画元素 */
-        .view-anime { width: 100%; height: 100%; display: flex; justify-content: center; align-items: flex-end; position: relative; }
-        .tree-trunk { width: 34px; height: 100px; background: #5d4037; z-index: 5; border-radius: 4px; }
-        .tree-crown {
-            width: 180px; height: 180px; background: #4caf50; border-radius: 50%;
-            position: absolute; bottom: 90px; z-index: 6; transition: all 0.5s;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
-        .fruit-dot {
-            width: 24px; height: 24px; background: #ff6f00; border-radius: 50%;
-            position: absolute; display: none; box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        .season-autumn .tree-crown { background: #2e7d32; transform: scale(1.15); }
-        .season-autumn .fruit-dot { display: block; animation: pop 0.5s; }
 
-        /* 实景监控 */
+        /* 视图 A: 养成动画 */
+        .view-anime { width: 100%; height: 100%; display: flex; justify-content: center; align-items: flex-end; position: relative; }
+        .tree-trunk { width: 20px; height: 60px; background: #5d4037; z-index: 5; border-radius: 4px; transition: all 0.5s; }
+        .tree-crown {
+            width: 80px; height: 80px; background: #4caf50; border-radius: 50%;
+            position: absolute; bottom: 50px; z-index: 6; transition: all 0.5s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; justify-content: center; align-items: center;
+        }
+
+        /* 视图 B: 实景监控 */
         .view-camera {
             width: 100%; height: 100%; display: none;
             background: #333 url('https://images.unsplash.com/photo-1599526742568-d0554bb78b1f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80') center/cover;
@@ -163,361 +75,376 @@
             text-shadow: 0 1px 2px black;
         }
         .live-dot { width: 10px; height: 10px; background: #ff1744; border-radius: 50%; display: inline-block; animation: blink 1s infinite; margin-right: 5px;}
-
-        /* 互动区 */
-        .action-container { padding: 0 20px; }
-        .action-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;
-        }
-        .action-btn {
-            background: white; padding: 15px 0; border-radius: 18px; text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03); cursor: pointer; font-size: 12px;
-            transition: all 0.2s; border: 1px solid #f0f0f0; color: #555;
-        }
-        .action-btn:active { transform: scale(0.95); background: #fafafa; }
-        .action-icon { font-size: 28px; display: block; margin-bottom: 6px; }
-
-        /* 进度条 */
-        .xp-bar-wrapper {
-            background: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden; margin: 10px 0;
-        }
-        .xp-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #66bb6a, #2e7d32); transition: width 0.3s; }
-
-        /* 通用组件 */
-        .btn {
-            background: linear-gradient(135deg, var(--light-green), var(--primary-green));
-            color: white; border: none; padding: 15px; border-radius: 50px; font-size: 18px; font-weight: bold;
-            width: 85%; display: block; margin: 25px auto; cursor: pointer; 
-            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3); letter-spacing: 1px;
-        }
-        .btn-orange { background: linear-gradient(135deg, #ffb74d, #ff6f00); box-shadow: 0 10px 25px rgba(255, 111, 0, 0.3); }
-        .btn-outline { background: white; border: 1px solid #ddd; color: #666; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-
-        .page { display: none; animation: slideUp 0.4s; }
-        .page.active { display: block; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes blink { 50% { opacity: 0.5; } }
-        @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+
+        /* 生长阶段样式 */
+        .stage-flower .tree-crown { width: 130px; height: 130px; bottom: 80px; background: #66bb6a; }
+        .stage-fruit .tree-crown { width: 160px; height: 160px; bottom: 90px; background: #2e7d32; }
+        .flower-dot { width: 8px; height: 8px; background: white; border-radius: 50%; position: absolute; }
+        .fruit-green { width: 12px; height: 12px; background: #cddc39; border-radius: 50%; position: absolute; }
+        .fruit-orange { width: 22px; height: 22px; background: #ff6f00; border-radius: 50%; position: absolute; }
+
+        /* === 互动控制区 === */
+        .action-container { padding: 0 20px; }
         
-        /* 音乐音符动画 */
-        .music-note {
-            position: absolute; color: #e91e63; font-size: 24px;
-            animation: floatMusic 1.5s ease-out forwards; z-index: 20;
+        .energy-bar {
+            display: flex; justify-content: space-between; background: #fff; padding: 10px 15px;
+            border-radius: 12px; border: 1px solid #eee; margin-bottom: 15px; align-items: center;
         }
-        @keyframes floatMusic { 0% { opacity: 1; transform: translateY(0) rotate(0); } 100% { opacity: 0; transform: translateY(-100px) rotate(20deg); } }
+        .energy-points { display: flex; gap: 5px; }
+        .energy-dot { width: 15px; height: 15px; border-radius: 50%; background: #ddd; transition: 0.3s; }
+        .energy-dot.active { background: #ffca28; box-shadow: 0 0 5px #ffca28; }
+
+        .xp-container { margin-bottom: 20px; }
+        .xp-labels { display: flex; justify-content: space-between; font-size: 12px; color: #666; margin-bottom: 5px; }
+        .xp-bar-bg { background: #e0e0e0; height: 6px; border-radius: 3px; overflow: hidden; }
+        .xp-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #4caf50, #2e7d32); transition: width 0.5s; }
+
+        .farm-btn {
+            background: linear-gradient(135deg, #42a5f5, #1976d2);
+            color: white; padding: 18px; border-radius: 16px; text-align: center;
+            box-shadow: 0 8px 20px rgba(25, 118, 210, 0.3); cursor: pointer;
+            position: relative; overflow: hidden; transition: transform 0.1s;
+        }
+        .farm-btn:active { transform: scale(0.98); }
+        .farm-btn.disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
+
+        .tools-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; }
+        .tool-item {
+            text-align: center; font-size: 11px; color: #666; background: white; padding: 10px 0;
+            border-radius: 10px; border: 1px solid #eee; cursor: pointer;
+        }
 
         /* 弹窗样式 */
         .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px);
             display: none; align-items: center; justify-content: center; z-index: 1000;
         }
-        .modal-box {
-            background: white; width: 85%; max-width: 340px; padding: 30px 20px; border-radius: 25px;
-            text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .card-box {
+            background: white; width: 280px; padding: 25px; border-radius: 20px; text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: popUp 0.4s;
         }
-        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        /* 邀请函样式 */
-        .invitation-card {
-            background: #fff8e1; padding: 30px 20px; margin: 20px; border-radius: 15px;
-            border: 2px solid #ffb74d; position: relative; text-align: center;
-            box-shadow: 0 10px 30px rgba(255, 143, 0, 0.1);
+        .dev-tools {
+            margin-top: 30px; border-top: 1px dashed #ccc; padding-top: 10px;
+            text-align: center; font-size: 10px; color: #999;
         }
-        .invitation-card::after {
-            content: ''; position: absolute; inset: 6px; border: 1px dashed #ff9800; pointer-events: none; border-radius: 10px;
+        .dev-btn { background: #eee; border: 1px solid #ccc; padding: 5px 10px; margin: 5px; border-radius: 4px; cursor: pointer; }
+        
+        .btn { background: var(--primary-green); color: white; border: none; padding: 12px; width: 100%; border-radius: 50px; font-size: 16px; margin-top: 10px; cursor:pointer;}
+        .page { display: none; }
+        .page.active { display: block; }
+        
+        /* 日记输入框样式 */
+        textarea {
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 10px;
+            box-sizing: border-box; font-family: inherit; margin: 10px 0; resize: none;
+            background: #fafafa;
         }
+
+        /* === 丰收页新样式 === */
+        .harvest-choices { display: flex; gap: 10px; margin: 20px 0; }
+        .choice-btn {
+            flex: 1; padding: 15px; border-radius: 12px; border: 2px solid #eee; background: white;
+            text-align: center; cursor: pointer; transition: 0.3s;
+        }
+        .choice-btn.active { border-color: var(--fruit-orange); background: #fff8e1; color: var(--fruit-orange); }
+        .choice-icon { font-size: 24px; display: block; margin-bottom: 5px; }
+        
+        /* 邀请函卡片 */
+        .invitation-ticket {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3); padding: 20px; border-radius: 15px;
+            border: 2px dashed #ffa000; position: relative; text-align: center; margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(255, 160, 0, 0.15);
+        }
+        .stamp {
+            position: absolute; bottom: 15px; right: 15px; width: 70px; height: 70px;
+            border: 3px solid #d84315; border-radius: 50%; color: #d84315;
+            display: flex; align-items: center; justify-content: center; font-weight: bold;
+            transform: rotate(-20deg); opacity: 0.8;
+        }
+        
+        /* 地址表单 */
+        .address-form { background: white; padding: 20px; border-radius: 15px; margin-top: 20px; }
+        .form-input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
 
     </style>
 </head>
 <body>
 
 <div class="app-container">
-    
+
     <div id="page-home" class="page active">
         <div class="home-banner">
-            <div class="banner-gradient"></div>
+            <div class="banner-mask"></div>
             <div class="banner-text">
-                <span class="banner-tag">🌳 生态基地直连</span>
-                <h1>云上橘园·衢州</h1>
-                <p>认养一颗树，守望一片甜</p>
+                <h1>云上橘园</h1>
+                <p>如果你有一棵树，愿意花时间陪它长大吗？</p>
             </div>
         </div>
-
-        <div class="live-status-bar">
-            <div class="status-item">
-                <span>24°C</span><label>今日气温</label>
-            </div>
-            <div class="status-item">
-                <span>65%</span><label>空气湿度</label>
-            </div>
-            <div class="status-item">
-                <span>优</span><label>空气质量</label>
-            </div>
+        <div style="padding: 30px 20px; text-align: center;">
+            <p style="color: #666; font-size: 14px; margin-bottom: 30px;">
+                本认养计划完全模拟衢州椪柑真实生长周期。<br>
+                你需要每天打卡，持续照料约 <strong>60天</strong> 才能收获。<br>
+                <span style="font-size: 12px; color: #999;">(进度将自动保存到您的浏览器)</span>
+            </p>
+            <button class="btn" onclick="startAdopt()">开始我的认养之旅</button>
         </div>
-
-        <div class="marquee-wrapper">
-            <span>📢 动态：</span>
-            <div class="marquee-content">
-                <div class="marquee-text">
-                    用户138****刚刚认养了一棵树  |  上海的张女士成功领取了50斤椪柑  |  当前基地果树剩余 203 棵，欲购从速！
-                </div>
-            </div>
-        </div>
-
-        <div class="feature-grid">
-            <div class="feature-card">
-                <span class="feature-icon">🌿</span>
-                <div class="feature-text">
-                    <h4>生态种植</h4>
-                    <p>不催熟 不打蜡</p>
-                </div>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">📹</span>
-                <div class="feature-text">
-                    <h4>全时监控</h4>
-                    <p>24h 见证成长</p>
-                </div>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">📦</span>
-                <div class="feature-text">
-                    <h4>保底收成</h4>
-                    <p>包邮送货到家</p>
-                </div>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon">💌</span>
-                <div class="feature-text">
-                    <h4>情感连接</h4>
-                    <p>写信/听歌/互动</p>
-                </div>
-            </div>
-        </div>
-
-        <button class="btn" onclick="startAdopt()">立即认养 (¥299/年)</button>
-        <p style="text-align: center; font-size: 12px; color: #999; margin-bottom: 20px;">已有 12,304 人参与认养</p>
     </div>
 
     <div id="page-adopt" class="page">
-        <h3 style="text-align: center; margin: 20px 0 10px; color: #333;">我的专属果树 🌳</h3>
-
+        <h3 style="text-align: center; margin: 20px 0;">我的果树 🌳</h3>
+        
         <div class="view-switcher">
             <div class="switch-btn active" id="btn-anime" onclick="switchView('anime')">🎨 养成视图</div>
             <div class="switch-btn" id="btn-camera" onclick="switchView('camera')">📹 实景监控</div>
         </div>
-
+        
         <div class="display-area" id="display-area">
             <div class="view-anime" id="view-anime">
-                <div class="tree-crown" id="tree-crown">
-                    <div class="fruit-dot" style="top:25%; left:25%"></div>
-                    <div class="fruit-dot" style="top:55%; left:65%"></div>
-                    <div class="fruit-dot" style="top:20%; left:55%"></div>
-                    <div class="fruit-dot" style="top:60%; left:30%"></div>
-                    <div class="fruit-dot" style="top:40%; left:10%"></div>
-                </div>
+                <div class="tree-crown" id="tree-crown"></div>
                 <div class="tree-trunk"></div>
             </div>
             <div class="view-camera" id="view-camera">
-                <div class="cam-ui">
-                    <span><span class="live-dot"></span>LIVE</span>
-                    <span>CAM-07 衢州基地</span>
-                </div>
+                <div class="cam-ui"><span><span class="live-dot"></span>LIVE</span><span>CAM-07 衢州基地</span></div>
                 <div id="sticker-layer" style="position: absolute; inset:0; pointer-events:none; overflow:hidden;"></div>
             </div>
         </div>
 
         <div class="action-container">
-            <div style="display:flex; justify-content:space-between; font-size:12px; color:#666; font-weight: 500;">
-                <span>成长进度 (满100%可收获)</span>
-                <span id="xp-text">0%</span>
-            </div>
-            <div class="xp-bar-wrapper">
-                <div class="xp-bar-fill" id="xp-bar"></div>
-            </div>
-
-            <div class="action-grid">
-                <div class="action-btn" onclick="interact('water')">
-                    <span class="action-icon">💧</span>浇水
-                </div>
-                <div class="action-btn" onclick="interact('fertilize')">
-                    <span class="action-icon">💩</span>施肥
-                </div>
-                <div class="action-btn" onclick="interact('music')">
-                    <span class="action-icon">🎵</span>听音乐
-                </div>
-                <div class="action-btn" onclick="toggleWeather()">
-                    <span class="action-icon">🌦️</span>天气
-                </div>
-                <div class="action-btn" onclick="openModal('sticker-modal')">
-                    <span class="action-icon">🎨</span>贴纸
-                </div>
-                <div class="action-btn" onclick="openModal('letter-modal')">
-                    <span class="action-icon">✉️</span>写信
+            <div class="energy-bar">
+                <div style="font-size: 14px; font-weight: bold;">⚡ 今日农活次数</div>
+                <div class="energy-points" id="energy-dots">
+                    <div class="energy-dot active"></div>
+                    <div class="energy-dot active"></div>
+                    <div class="energy-dot active"></div>
                 </div>
             </div>
 
-            <button id="harvest-btn" class="btn btn-orange" style="display:none;" onclick="goToInvitation()">
-                🎉 果实已成熟，去领取
-            </button>
+            <div class="xp-container">
+                <div class="xp-labels">
+                    <span id="stage-label">🌱 抽梢期</span>
+                    <span>进度: <span id="xp-val">0.0</span>%</span>
+                </div>
+                <div class="xp-bar-bg"><div class="xp-bar-fill" id="xp-bar"></div></div>
+            </div>
+
+            <div id="farm-btn" class="farm-btn" onclick="doFarmWork()">
+                <div style="font-size: 28px;">🚜</div>
+                <h3 style="margin: 5px 0 0;">进行田间养护</h3>
+                <p style="margin: 2px 0 0; font-size: 11px; opacity: 0.8;">随机获取 生长物资 / 气候事件</p>
+            </div>
+
+            <div style="text-align: center; font-size: 12px; color: #999; margin-top: 10px;" id="cooldown-msg">
+                每日 00:00 刷新体力
+            </div>
+
+            <button id="harvest-btn" class="btn" style="background:#ff6f00; display:none; margin-top:20px; box-shadow: 0 5px 15px rgba(255,111,0,0.4);" onclick="goToHarvestPage()">🎉 果实成熟，去收获！</button>
+
+            <div class="tools-grid">
+                <div class="tool-item" onclick="openModal('sticker-modal')">🎨 贴纸</div>
+                <div class="tool-item" onclick="openModal('diary-modal')">📝 写观察日记</div>
+                <div class="tool-item" onclick="alert('🌧️ 今天衢州有小雨')">基地天气</div>
+                <div class="tool-item" onclick="resetGame()">重置进度</div>
+            </div>
+
+            <div class="dev-tools">
+                [开发者测试区]<br>
+                <button class="dev-btn" onclick="cheatTimeTravel()">⏩ 过一天</button>
+                <button class="dev-btn" onclick="cheatAddXP()">💉 生长+10%</button>
+            </div>
         </div>
     </div>
 
-    <div id="page-invitation" class="page">
-        <h2 style="text-align: center; color: var(--fruit-orange); margin-top:30px;">丰收时刻</h2>
+    <div id="page-harvest-choice" class="page">
+        <h2 style="text-align: center; color: var(--fruit-orange); margin-top: 30px;">🎉 恭喜丰收！</h2>
+        <p style="text-align: center; color: #666; font-size: 14px;">您的果树已结出硕果，请选择收获方式：</p>
         
-        <div class="invitation-card">
-            <h3 style="color: #d84315; margin-bottom: 20px;">🍊 采摘邀请函</h3>
-            <p style="text-align: left; line-height: 1.8; font-size: 14px; color: #555;">
-                亲爱的园主：<br><br>
-                感谢您 <strong>365天</strong> 的云端守护。您认养的衢州椪柑现已挂满枝头，糖度达到 13°+。<br><br>
-                我们诚挚邀请您前往基地体验采摘，或填写地址，我们将这份甜蜜寄送到家。
-            </p>
-            <div style="margin-top:20px; font-weight:bold; color:#d84315; border:3px solid #d84315; border-radius:50%; width:90px; height:90px; display:flex; align-items:center; justify-content:center; margin-left:auto; transform:rotate(-15deg); opacity:0.8; font-size: 16px;">
-                衢州<br>正宗
-            </div>
-        </div>
-
         <div style="padding: 20px;">
-            <input type="text" placeholder="收货人姓名" style="width:100%; padding:14px; border:1px solid #ddd; border-radius:10px; box-sizing:border-box; margin-bottom:12px; background: #f9f9f9;">
-            <button class="btn btn-orange" style="margin: 0 auto;" onclick="alert('✅ 提交成功！请耐心等待发货。')">提交收货信息</button>
-            <button class="btn btn-outline" style="margin-top:15px;" onclick="navigateTo('page-home')">返回首页</button>
+            <div class="harvest-choices">
+                <div class="choice-btn" id="btn-choice-invite" onclick="toggleHarvestMode('invite')">
+                    <span class="choice-icon">🎟️</span>
+                    <div>现场采摘</div>
+                </div>
+                <div class="choice-btn" id="btn-choice-mail" onclick="toggleHarvestMode('mail')">
+                    <span class="choice-icon">📦</span>
+                    <div>快递到家</div>
+                </div>
+            </div>
+
+            <div id="panel-invite" style="display: none;">
+                <div class="invitation-ticket">
+                    <h3 style="color: #d84315; margin: 0 0 10px 0;">🍊 衢州橘园·采摘入场券</h3>
+                    <p style="font-size: 13px; color: #555; text-align: left; line-height: 1.6;">
+                        尊贵的认养人：<br>
+                        凭此电子券，您可携带 2 位家属免费入园。<br>
+                        我们在橘园等您，不见不散！
+                    </p>
+                    <div style="margin-top: 15px; font-size: 12px; color: #999;">
+                        有效期：2026.11.01 - 2026.12.31
+                    </div>
+                    <div class="stamp">VIP<br>通行</div>
+                </div>
+                <button class="btn" style="margin-top: 20px;" onclick="alert('📸 请截图保存此页面，入园时出示')">保存邀请函</button>
+            </div>
+
+            <div id="panel-mail" style="display: none;">
+                <div class="address-form">
+                    <h4 style="margin: 0 0 15px 0;">填写收货信息</h4>
+                    <input class="form-input" type="text" placeholder="收货人姓名">
+                    <input class="form-input" type="tel" placeholder="联系电话">
+                    <input class="form-input" type="text" placeholder="省/市/区">
+                    <textarea class="form-input" rows="3" placeholder="详细地址"></textarea>
+                    <button class="btn" onclick="alert('✅ 提交成功！我们将尽快为您发货。')">确认提交</button>
+                </div>
+            </div>
+
+            <button class="btn" style="background:transparent; color:#999; margin-top: 20px;" onclick="navigateTo('page-adopt')">返回果园</button>
         </div>
     </div>
 
+</div>
+
+<div id="drop-modal" class="modal-overlay">
+    <div class="card-box">
+        <div style="font-size: 50px; margin-bottom: 10px;" id="drop-icon">💧</div>
+        <h3 id="drop-name" style="margin: 0; color: #333;">清晨露水</h3>
+        <p id="drop-desc" style="color: #666; font-size: 13px; margin: 10px 0;">微量水分补充</p>
+        <div style="color: var(--primary-green); font-weight: bold; font-size: 18px; margin-bottom: 20px;">
+            生长进度 +<span id="drop-gain">0.5</span>%
+        </div>
+        <button class="btn" onclick="closeModal('drop-modal')">收下</button>
+    </div>
 </div>
 
 <div id="sticker-modal" class="modal-overlay">
-    <div class="modal-box">
+    <div class="card-box">
         <h3>装饰监控</h3>
         <p style="font-size:12px; color:#999;">点击贴纸添加到画面中</p>
         <div style="font-size: 34px; display:flex; justify-content:center; gap:20px; margin:25px 0;">
-            <span onclick="addSticker('🎀')" style="cursor:pointer">🎀</span>
-            <span onclick="addSticker('✨')" style="cursor:pointer">✨</span>
-            <span onclick="addSticker('🐛')" style="cursor:pointer">🐛</span>
-            <span onclick="addSticker('🏷️')" style="cursor:pointer">🏷️</span>
+            <span onclick="addSticker('🎀')" style="cursor:pointer">🎀</span><span onclick="addSticker('✨')" style="cursor:pointer">✨</span>
+            <span onclick="addSticker('🐛')" style="cursor:pointer">🐛</span><span onclick="addSticker('🏷️')" style="cursor:pointer">🏷️</span>
         </div>
-        <button class="btn btn-outline" style="margin:0 auto; width: 100%;" onclick="closeModal('sticker-modal')">关闭</button>
+        <button class="btn" style="background:#fff; color:#666; border:1px solid #ddd;" onclick="closeModal('sticker-modal')">关闭</button>
     </div>
 </div>
 
-<div id="letter-modal" class="modal-overlay">
-    <div class="modal-box">
-        <h3>给树写信</h3>
-        <textarea rows="4" style="width:100%; border:1px solid #eee; padding:15px; box-sizing:border-box; border-radius: 10px; background: #fafafa;" placeholder="写下你的心情..."></textarea>
-        <button class="btn" style="width:100%; margin-top:20px;" onclick="closeModal('letter-modal'); alert('已寄出！')">发送</button>
-        <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="closeModal('letter-modal')">取消</button>
+<div id="diary-modal" class="modal-overlay">
+    <div class="card-box">
+        <h3>📝 观察日记</h3>
+        <p style="font-size:12px; color:#999;">记录今天果树的变化吧</p>
+        <textarea rows="5" placeholder="今天天气不错，叶子看起来更绿了..."></textarea>
+        <button class="btn" onclick="saveDiary()">保存日记</button>
+        <button class="btn" style="background:#fff; color:#666; border:1px solid #ddd; margin-top:10px;" onclick="closeModal('diary-modal')">取消</button>
     </div>
 </div>
 
 <script>
-    let xp = 0;
+    const MAX_ENERGY = 3; const XP_GAIN_MIN = 0.5; const XP_GAIN_MAX = 1.5;
+    let gameState = { xp: 0, energy: 3, lastLoginDate: new Date().toLocaleDateString() };
     let currentView = 'anime';
 
-    function navigateTo(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        window.scrollTo(0,0);
+    window.onload = function() { loadGame(); checkDailyReset(); updateUI(); };
+
+    function loadGame() { const saved = localStorage.getItem('quzhou_farm_save'); if (saved) gameState = JSON.parse(saved); }
+    function saveGame() { localStorage.setItem('quzhou_farm_save', JSON.stringify(gameState)); }
+    function checkDailyReset() {
+        const today = new Date().toLocaleDateString();
+        if (gameState.lastLoginDate !== today) { gameState.energy = MAX_ENERGY; gameState.lastLoginDate = today; alert('🌞 新的一天开始了！体力已恢复！'); saveGame(); }
     }
 
-    function startAdopt() {
-        alert('🎉 恭喜认养成功！正在为您分配果树...');
-        setTimeout(() => navigateTo('page-adopt'), 1000);
-    }
+    function navigateTo(pageId) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(pageId).classList.add('active'); window.scrollTo(0,0); }
+    function startAdopt() { navigateTo('page-adopt'); }
 
     function switchView(mode) {
-        currentView = mode;
-        const anime = document.getElementById('view-anime');
-        const cam = document.getElementById('view-camera');
+        currentView = mode; const anime = document.getElementById('view-anime'); const cam = document.getElementById('view-camera');
+        if (mode === 'anime') { anime.style.display = 'flex'; cam.style.display = 'none'; document.getElementById('btn-anime').classList.add('active'); document.getElementById('btn-camera').classList.remove('active'); }
+        else { anime.style.display = 'none'; cam.style.display = 'block'; document.getElementById('btn-anime').classList.remove('active'); document.getElementById('btn-camera').classList.add('active'); }
+    }
+
+    function doFarmWork() {
+        if (gameState.xp >= 100) return alert('果实已成熟，快去领取吧！');
+        if (gameState.energy <= 0) return alert('😫 今天的农活干完了，明天再来吧！');
+        if (currentView === 'camera') { switchView('anime'); setTimeout(() => { alert('切回养成视图查看生长情况 🌱'); }, 200); }
+
+        gameState.energy--;
+        let item = getRandomItem();
+        gameState.xp += item.gain; if (gameState.xp > 100) gameState.xp = 100;
+        saveGame(); updateUI(); showDropCard(item);
+    }
+
+    function getRandomItem() {
+        const stage = getStage(gameState.xp); const rand = Math.random();
+        let gain = parseFloat((Math.random() * (XP_GAIN_MAX - XP_GAIN_MIN) + XP_GAIN_MIN).toFixed(2));
+        let name = "基础养护", icon = "🧤", desc = "简单的除草工作";
+
+        if (stage === 'flower') { if (rand > 0.8) { name = "蜜蜂授粉"; icon = "🐝"; desc = "授粉成功率大增"; gain += 0.5; } else { name = "磷肥补充"; icon = "🧪"; desc = "促进花芽分化"; } }
+        else if (stage === 'fruit') { if (rand > 0.8) { name = "充足光照"; icon = "☀️"; desc = "今日光照 > 10h"; gain += 0.5; } else { name = "有机肥料"; icon = "💩"; desc = "传统农家肥"; } }
+        else { if (rand > 0.8) { name = "清晨甘露"; icon = "💧"; desc = "水分充足"; } }
+        return { name, icon, desc, gain };
+    }
+
+    function getStage(xp) { if (xp < 30) return 'sprout'; if (xp < 60) return 'flower'; if (xp < 100) return 'fruit'; return 'harvest'; }
+
+    function updateUI() {
+        const dots = document.getElementById('energy-dots').children;
+        for(let i=0; i<3; i++) i < gameState.energy ? dots[i].classList.add('active') : dots[i].classList.remove('active');
         
-        if (mode === 'anime') {
-            anime.style.display = 'flex'; cam.style.display = 'none';
-            document.getElementById('btn-anime').classList.add('active');
-            document.getElementById('btn-camera').classList.remove('active');
+        const btn = document.getElementById('farm-btn'); const msg = document.getElementById('cooldown-msg');
+        if (gameState.energy <= 0) { btn.classList.add('disabled'); btn.innerHTML = '<h3 style="margin:0">💤 休息中...</h3>'; msg.style.color = 'red'; msg.innerText = '体力耗尽，请明天再来'; }
+        else { btn.classList.remove('disabled'); btn.innerHTML = '<div style="font-size: 28px;">🚜</div><h3 style="margin: 5px 0 0;">进行田间养护</h3><p style="margin: 2px 0 0; font-size: 11px; opacity: 0.8;">随机获取 生长物资 / 气候事件</p>'; msg.style.color = '#999'; msg.innerText = '每日 00:00 刷新体力'; }
+
+        document.getElementById('xp-bar').style.width = gameState.xp + '%'; document.getElementById('xp-val').innerText = gameState.xp.toFixed(1);
+        updateTreeVisuals();
+    }
+
+    function updateTreeVisuals() {
+        const xp = gameState.xp; const crown = document.getElementById('tree-crown'); const view = document.getElementById('view-anime'); const label = document.getElementById('stage-label');
+        view.className = 'view-anime'; crown.innerHTML = '';
+
+        if (xp < 30) { label.innerText = '🌱 抽梢期'; }
+        else if (xp >= 30 && xp < 60) { view.classList.add('stage-flower'); label.innerText = '🌸 开花期'; crown.innerHTML = '<div class="flower-dot" style="top:20%;left:20%"></div><div class="flower-dot" style="top:50%;left:60%"></div>'; }
+        else if (xp >= 60 && xp < 100) { view.classList.add('stage-fruit'); label.innerText = '🍊 挂果期'; crown.innerHTML = '<div class="fruit-green" style="top:30%;left:30%"></div><div class="fruit-green" style="top:60%;left:50%"></div>'; }
+        else { view.classList.add('stage-fruit'); label.innerText = '🎉 成熟期'; crown.innerHTML = '<div class="fruit-orange" style="top:30%;left:30%"></div><div class="fruit-orange" style="top:60%;left:50%"></div><div class="fruit-orange" style="top:40%;left:20%"></div>'; document.getElementById('harvest-btn').style.display = 'block'; }
+    }
+
+    // === 新增：丰收页逻辑 ===
+    function goToHarvestPage() {
+        navigateTo('page-harvest-choice');
+    }
+
+    function toggleHarvestMode(mode) {
+        const panelInvite = document.getElementById('panel-invite');
+        const panelMail = document.getElementById('panel-mail');
+        const btnInvite = document.getElementById('btn-choice-invite');
+        const btnMail = document.getElementById('btn-choice-mail');
+
+        if (mode === 'invite') {
+            panelInvite.style.display = 'block';
+            panelMail.style.display = 'none';
+            btnInvite.classList.add('active');
+            btnMail.classList.remove('active');
         } else {
-            anime.style.display = 'none'; cam.style.display = 'block';
-            document.getElementById('btn-anime').classList.remove('active');
-            document.getElementById('btn-camera').classList.add('active');
+            panelInvite.style.display = 'none';
+            panelMail.style.display = 'block';
+            btnInvite.classList.remove('active');
+            btnMail.classList.add('active');
         }
     }
 
-    // 核心互动逻辑
-    function interact(type) {
-        if (xp >= 100) return alert('果树已成熟，请点击下方按钮领取！');
-
-        let gain = 0;
-        let msg = '';
-        
-        // 动作判断
-        if (type === 'water') {
-            gain = 10; msg = '浇水成功 +10%';
-        } else if (type === 'fertilize') {
-            gain = 15; msg = '施肥成功 +15%';
-        } else if (type === 'music') {
-            gain = 20; msg = '听音乐心情变好 +20%';
-            createMusicNote(); // 播放音符动画
-        }
-
-        xp += gain;
-        if (xp > 100) xp = 100;
-
-        // UI更新
-        document.getElementById('xp-bar').style.width = xp + '%';
-        document.getElementById('xp-text').innerText = xp + '%';
-
-        // 状态判定
-        if (xp >= 100) {
-            document.getElementById('display-area').classList.add('season-autumn');
-            document.getElementById('harvest-btn').style.display = 'block';
-            alert('🎉 恭喜！您的果树在您的悉心照料下已经成熟！');
-        }
-    }
-
-    // 音乐音符特效
-    function createMusicNote() {
-        const area = document.getElementById('display-area');
-        const note = document.createElement('div');
-        note.className = 'music-note';
-        note.innerText = '🎵';
-        note.style.left = (20 + Math.random() * 60) + '%';
-        note.style.bottom = '100px';
-        area.appendChild(note);
-        setTimeout(() => note.remove(), 1500);
-    }
-
-    // 天气特效
-    function toggleWeather() {
-        const area = document.getElementById('display-area');
-        if (area.style.filter === 'brightness(0.8)') {
-            area.style.filter = 'brightness(1)';
-            alert('天晴了 ☀️');
-        } else {
-            area.style.filter = 'brightness(0.8)';
-            alert('开始下雨了 🌧️');
-        }
-    }
-
-    // 贴纸逻辑
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function showDropCard(item) { document.getElementById('drop-icon').innerText = item.icon; document.getElementById('drop-name').innerText = item.name; document.getElementById('drop-desc').innerText = item.desc; document.getElementById('drop-gain').innerText = item.gain; document.getElementById('drop-modal').style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     
-    function addSticker(char) {
-        switchView('camera'); // 强制切到监控
-        const layer = document.getElementById('sticker-layer');
-        const s = document.createElement('div');
-        s.innerText = char;
-        s.style.position = 'absolute';
-        s.style.fontSize = '40px';
-        s.style.left = Math.random() * 70 + '%';
-        s.style.top = Math.random() * 70 + '%';
-        layer.appendChild(s);
-        closeModal('sticker-modal');
-    }
+    function addSticker(char) { switchView('camera'); const layer = document.getElementById('sticker-layer'); const s = document.createElement('div'); s.innerText = char; s.style.position = 'absolute'; s.style.fontSize = '40px'; s.style.left = Math.random() * 70 + '%'; s.style.top = Math.random() * 70 + '%'; layer.appendChild(s); closeModal('sticker-modal'); }
+    
+    function saveDiary() { alert('✅ 日记已保存到云端！'); closeModal('diary-modal'); }
 
-    function goToInvitation() { navigateTo('page-invitation'); }
+    function cheatTimeTravel() { gameState.energy = 3; gameState.lastLoginDate = "2020-01-01"; checkDailyReset(); updateUI(); }
+    function cheatAddXP() { gameState.xp += 10; if(gameState.xp > 100) gameState.xp = 100; saveGame(); updateUI(); alert('🧪 [开发者模式] 生长 +10%'); }
+    function resetGame() { if(confirm('确定要重置吗？')) { localStorage.removeItem('quzhou_farm_save'); location.reload(); } }
 
 </script>
-
 </body>
 </html>
